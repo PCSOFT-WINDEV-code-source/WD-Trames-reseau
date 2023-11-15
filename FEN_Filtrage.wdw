@@ -1,0 +1,317 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : FEN_Filtrage
+ major_version : 28
+ minor_version : 0
+ type : 2
+ description : ""
+ subtype : 0
+window :
+ name : FEN_Filtrage
+ identifier : 0x28b27ad71cb75e37
+ internal_properties : CAAAAAgAAABaqspciFv4jjv9ofmOSjJ1LfddwJ17TQNFEm7UbglRhGtZeHs8CGlU2aFk2asQAR3AguKXVkHcak0qfczpiHvOOMDhTaqUQFn3i2MIjBRi3CjZ+IYpQcaVtnXSqGirLP10BApo2bd9njGBUDWfaC7e5KXY3C9gGT6PwBptay98iPcz4emSk29CBSts6gQ/6CIQDwZLhO/6X3Ty388tAAww3zMWh1O0ha7FZgR7gW1Anl+AWtv0JMW1ZI6dtg6xoGgV3VZaxdJ5ZKpCGww8AW0/ynTuVkLglupoGSSmPdctiBKHdpY7l4f3X4BkxfPq+aMvoSWbsRHzDPb6uU8tVQEn1Pfy9mHHKbV2pbUUZBj+qwwXoRjI/WxobGE0Gd0vD3mOBFT3/xEYfnUDnbTrbYDkcyyEleN+7+7U5QK2Xe5OYcfKhsdpuj5pwcaTOngBR/PJiOYbL1QZu7dKvcE/N7/CcCl5nd0Dylc7H7TBTZ54zprIPLMK0hqmmS6L7LVZl+CtGpHdylxNXfJwsy6Jesvmym24EAAsDxQeK+IP2Ih56TGGwX+/DRYz9SyxAgF7y7/dvk5MuaohWXrUz7g4msocOJEvAfTuewMwV8164OPnyvxxVHdOCnH6XHl0XTHIWMpmnV4Gi+1qq249BlHwcU9hd16h1kRlA597dj2qZC6mA5Puao0i7gtBPzgAluG8BxXC8QejVuXcKiMp8vyFh+L12SIl1F+3lCTKeVDh877FKMwAwKYqFvnJdnmayy3FeuvM7qqRGRUQP7urGO0tLCU9m0KuyJrgWBjM+xLwJyOuJSvdatBBwLRQyrWGHQ==
+ properties :
+  width : 426
+  height : 208
+  widthClient : 424
+  heightClient : 176
+ controls :
+  -
+    name : INT_OptionsFiltrage
+    identifier : 0x28b27aff1f49f845
+    internal_properties : CAAAAAgAAADWQ/k0/uaGL3APnEsuvO2MvkFVhlO3xFDbtcgNXlSHXnKWl/B9jp6808W2trxeE42z5kBaDefQC8jPn2fk44VsW2V/F4QrIoy/iWJieDTb7UMeIuGZ43m5xNXY0X1jSekxHqh7SziHVsed3zCi6oRCdJGkQXuP6ch/Y/mvJ+gnGZ/YKb8iGDJKqwfLYGv7JARHldcxGaH7aqKG+bVLpClNaoFKfOAE5d/Wy/vxEYlXz29MiXskrqYFzfCwYaApl7dkSrpSkm1dnEd46W54UzaIUVGXd9E4sQp2cNWnN25fuEQ6KQK3mxfQm8D+OC7q/fM8m1RPrnxlogpkMt1uqstvVBoRwWk5SQiPoCsVXr2dGZjHxDtXh8/HUgQfu5RnQ7PFHNa2t141r99+Y8MyTQiY6VlXeSUqHEXZKJHnNVAxroteDb8X89Cvb3Y69VSc46U4F28zPEwxUMD9Cfs0VrZzz8anJTCAcYgeo+lpXtY9CEcvfhBh9ttScDkD6xcfYlXnncO3UwESq9ttiCJFsRAmqx2wqR8ShoSGEbF5k6HaKfCSJ1/3hy3T3ZmpC3K06IOcceNZDV/d4C7QXr9YbVZgzmjVDFJ7qiUUUIdJMCYYj0A8/cMrK1uyXpnFC/ReRWI5fuF9ZTtBHaInbLjZVuwsZanoAAOAHje3LoCNVA44HgtQDH069Wp1nf8w7Blu7//JdNvxBUjwkC3FCmxrMwcJkLRwBxQ03Cnv76X+1y/s+ZLP6RH3yXzk9oOdxRtM6fAge4gYIlv2JZ6baNd2l6dm6eLJJDlZg/hDIlTNPzXzgTdN8C3OIudTW6G37DICTjJY0gohLcGh2VpIFQ5aGOA5lcf4ZF/WtcJY2Bslmk1MyLMeoAfS2ivdJjjEvSCHtVH8tDPx6YlPPsB7q5+nJR2kALRcS1cA5qNzLmp4Cbq54Zm1orRY9QaIfHp6xp4NPbzYnHCLBfsKB5CT79RbQrBTyz4CEF51Fz1dBrPai3FIKehKvJwpvK/w1Q3V96vqrzib1D5a2XPYY10AzlLX1w7GTtMR73FmnWqNF8zpSOjzEY1wr1gIWzQqgBQ1uF+Cw5PjDjjmkrYMFP9k/j0Hak3Ww6J8DK+3314=
+    properties :
+     x : 6
+     y : 2
+     width : 407
+     height : 126
+    options :
+     -
+       internal_properties : CAAAAAgAAABCFjahEVe2oaQDei+kMXSIgSND2xE2SREPIAlmcKOVsIzbM5ftWVV1+PIx+clLYdnzTGHw6zSX4mm3WXb0nzrDRtC1UqilrHLDJUiDkRuTn/B/UiIHtYLByVgh5j2cwLWV+vmQQ4xIfmP0fOnS9ewIb0itvDBfILMcQdb9
+     -
+       internal_properties : CAAAAAgAAADckDzkny394/VoGVU9DlrlTmcdVRabEyZayyboei+Uf2q92VW5JM8V+AJBqLxvjFlal4GbbYH8LKO5rGx6OpaTFWrQhJnznNyLA5i377xOe4LuWM7MW8xKSaou+2LzZEQ1jAp11oQT4DeeX8FgjYBZTG+EW+P4
+     -
+       internal_properties : CAAAAAgAAAD4OfXIKwuQXbwKuwGFQicwH8QIQPaRnWswaIZzdqHbtKRY+GvsKTlh73yWy03XZRcsH5i7UKVA16GNZoJ+JtOnSHdmYJ7idmVVkaCOQE9gFNoBXHQr/s7/m0iOIi8SyvXFHi21X9e1ifDo7Kh9rovNAQOJS78=
+     -
+       internal_properties : CAAAAAgAAAAKC8u6fd1al3acNZ/vmJl6ATb+cjhbd91KskB54O8FVh6i9tUWg+OD2WZwQRdtP/kumQ5C2t+M5Yc9PW0bfwA465Fobqy8TLv/a6okPiEWblR7JvqxEFwNlRL4mIUM0J8fkJ/DTSH7T4pyZjbDaFEXy1VbeY0=
+    type : 5
+    controls : []
+    code_elements :
+     type_code : 5
+     p_codes : []
+  -
+    name : BTN_APPLIQUER
+    identifier : 0x28b27c2e41729898
+    internal_properties : CAAAAAgAAAAearBEZiw/V5uGRE30YBtYbcTwYl6Fr6sFFbhRTP7uBglGWljDJk5SCvkDZDOGBA8CmdnBSy5MtUns4v/EqquMTHooX5Um4YiTrh198U3Y9nBg3ZI+k1V+4IiimAGyW5n4XJyMFR1lXBX4sskzkIPfNm53uWjmZK4qmzFZ2AyACy/raGC5tfsuhBUwX/tsgqWRgZGo+Auk3ujG1zrD0etJnoE4vricz19hSgsvlLIK62r6ewIeyb5tYI4fg8G1gumThI3PVHYMPVnx0Wuk9QWSh9qL6W3QVhlateHYgZT3Ac9BM7MXm3wz43eB9sLauw4HG1HTBV8wOV3shpg0j/ivyUR/UUOu5ZFLjg/yBotefmbxShoY67I/G3459APzK9bJztCbx9wkpwk+ZVmElWQqX7hyzrrLPWu6zvWcIHU4B7v7iow2CYCOTTJwD0Rs1m2c6UBzv07fI674zOiaPdSEiGMIC3vC+lLzG3NYIaIMHtY0srKMiSpVW3pYkA4drUEWkn6S1zPuJcew9pKTE30/0YycmUXrx5Ops219DRosvIJ/o2v0a5jdCaVPAPmh6bLyDnBg86T0CiClZ5qYAuNE6DfZIH5XMVOAxeFVi/TOSfrTX0HAY3A6Zo5p6YW+NB4Sj3GDo/Hry6ykaMzAwLC8sLw+QMA1q1lrYYuQkKAYQNsxRTWRviPRm3/fmbted+enP8j40UartP5zff0LBnCQQnTjUHGfFc6oqlzxUt7E4dd5GItp34SBNIgCudVEBt5NvU+GZ7J+sH60AMp+FoCi/nsZD9G2eFRULj0icTNZwWYb8//jDwD8ie0w8uQP/SW5sTbfW0Pt1m/NYKp5b/vSeyg3T4ID9KJWdzM/aTW4bYIDXMeLmFL2QBorIfqUamHtS4pcDo7QsAJnFyz2j4FFCw8=
+    properties :
+     x : 230
+     y : 138
+     width : 92
+     height : 24
+    type : 4
+    code_elements :
+     type_code : 4
+     p_codes :
+      -
+        code : |1+
+         
+         // IGMP filtré ou non ?
+         SI INT_OptionsFiltrage[1]..Valeur = Vrai ALORS
+         	clMainCapture:CapturerIGMP(Vrai)
+         SINON
+         	clMainCapture:CapturerIGMP(Faux)
+         FIN
+         
+         // ICMP filtré ou non ?
+         SI INT_OptionsFiltrage[2]..Valeur = Vrai ALORS
+         	clMainCapture:CapturerICMP(Vrai)
+         SINON
+         	clMainCapture:CapturerICMP(Faux)
+         FIN
+         
+         // UDP et TCP filtrés ou non ? Si on les filtre, on fournit les ports souhaitées en paramètre pour la capture
+         // Les doivent être séparés par un ;
+         SI INT_OptionsFiltrage[3]..Valeur = Vrai ALORS
+         	SI VerifierPorts(SAI_PortUDP) ALORS
+         		clMainCapture:CapturerUDP(Vrai,SAI_PortUDP)
+         	SINON
+         		Erreur(<§$0001§>+RC+RC+<§$0003§>+RC+RC+<§$0006§>)
+         		RETOUR
+         	FIN
+         SINON
+         	clMainCapture:CapturerUDP(Faux)
+         FIN
+         
+         SI INT_OptionsFiltrage[4]..Valeur = Vrai ALORS
+         	SI VerifierPorts(SAI_PortTCP) ALORS
+         		clMainCapture:CapturerTCP(Vrai,SAI_PortTCP)
+         	SINON
+         		Erreur(<§$0002§>+RC+RC+<§$0004§>+RC+RC+<§$0005§>)
+         		RETOUR
+         	FIN
+         SINON
+         	clMainCapture:CapturerTCP(Faux)
+         FIN
+         
+         // Sauvegarde des paramètres
+         SauveParamètre("IGMP", INT_OptionsFiltrage[1]..Valeur)
+         SauveParamètre("ICMP", INT_OptionsFiltrage[2]..Valeur)
+         SauveParamètre("UDP", INT_OptionsFiltrage[3]..Valeur)
+         SauveParamètre("TCP", INT_OptionsFiltrage[4]..Valeur)
+         SauveParamètre("PortUDP", SAI_PortUDP)
+         SauveParamètre("PortTCP", SAI_PortTCP)
+         
+         // Fermeture de la fenêtre
+         Ferme(FEN_Filtrage)
+        type : 18
+      -
+        type : 161
+        enabled : false
+  -
+    name : BTN_ANNULER
+    identifier : 0x28b27c7c467cca90
+    internal_properties : CAAAAAgAAAAy5xtNm7XmIelTSGM1JMC6ftAOc3MJoHylk9UlgKhquDt09DBkBGXRRNpv/lRSr3Z8Cc71sH6tA69XbXCxYGe0pN09P79nNU3/BFXT86vOlLLtx7NXLRPqUjMZd48JCPntj4HkqlsxKiio5hbPQnv9nJO2stftZwEgWJRqrLIkBLwoFUjTONu47PZ7vHTNxr4u4pHqCFDQ510rx28EAv+OpAtRIWsx0TQslYxcfBWFGbzLE8pv+/dKM9Yuw/6ts+5R3wAKd1i79B7Qpn0avx+aFQpJJCLAe2v5m60Rzta0IQZ75D1yOk+9ihV7VNojBOQitA1ZI2Rf2vqrgDybBthcrztKKirpuEdmC1vM4cBQ24IBk1JbBFe80EUgkIYmxfAdz1UptLY6F0WjzUr0VYQ4f3Qj9HH6St9WhAAs72Gua2SlOx8bgjYO94y2F3M5KGJf5YJqP1NDVOkpLtczofSsRUJztuq/Y9WFDcpPYOQPvXfMeCBXgnDEAXgoGa5thfVVM1D3+kOS6kjOP8bs2mmQWckUk7Jn4CzgNs0poHpLPLpgRBPOtJy0oBX9r0UTjvsN1XqXT7ZePJSnBxPErnzFoUsQbEeKKxeeIpz9aMsoK9IOzea5ozzKaLEDWcJIkyNqLspZ1U+N9EAOajv8L9mzQhCD9buujksgIxpTZfipqEo0s+JQuWjA7aDvjtRgI8AjQb+XM7auuysq2JZasGuyW8XjDI9YRl/I9usEHOT5zHjdHJltqEwUPwGIxrhD6F9R654MGjQfeOyKt2Ixjz5rhouEa5SVDuxIPDOmB5XqCSKZpHE5om8Fg06dRJu4BsnaOj6x5eQgP1b4uPMrVHZM4dBbrMjOZZzGQwWvrO3LQhChchCG0VUweGxoPxV53IANW/oVb/aGhgyIJsPxExcK0hq26Vzt3WgS
+    properties :
+     x : 332
+     y : 138
+     width : 80
+     height : 24
+    type : 4
+    code_elements :
+     type_code : 4
+     p_codes :
+      -
+        code : |1+
+         // Les filtres n'ont pas été modifiés
+         Ferme(FEN_Filtrage)
+        type : 18
+      -
+        type : 161
+        enabled : false
+  -
+    name : SAI_PortTCP
+    identifier : 0x28b2aabd9d897a8c
+    internal_properties : CAAAAAgAAAA1SakeL12YkMjmibLGymyIpvjGLY2Wrv8FOykE10iEhKUj1IgfYhX7VIA+UBntzq1x28KKRdtg2qzORCpGmra3kFWBuC/2+dqODRzA7e3KG6ysGn+l0vjzNBVpVEeW+hD+VMPwiFmuL5V7GAv9SJKQb8B+eL02SRIsF3fmMkSB6GHmsG2sBrngIOcBakNW5OwbS21hUTdRApxE49+mWzpueML0MFLzorM1re42pdv76qrhzxxoek5nba+WQJijI88CZN9RFYqnzxSG426q4omAnez3taCmDvIyHrFPfZ2Q8TW1x3fNkbgKDLFYrVg7r9J/qCmIyTVbYMskQEGJAkS7Mms8ZscpR8DNTzNWsIURup4i/0IYgAogPRBfPNVLeiQk1ydIVHfdr/KYWpXo9mnvITwp93Rp4TX6kZiI5FtGpG2yMUcubsCWEzmkVwxfrX0PSZIfYNwi53KIQa0Hjjrzi2lDzSugiXjQolIThSp5d+BiyPr3B9fIZGzFW5evOl0LzOJMsDP2aG3aMGzXLB8yRpdzuhIMi1nC+61aykt6Lso33AQ9O2NqNFIgB3WQzuVedNtPqZPbzMoi0KOZ7WFs0lNDhH6tkS4DfcsFrltP6Vnbfx4aEgVdgdiOZv2830GxMDlw2+PLsEHaTNj7kmmAuiP0m2kCkIHYjnP9MYzpOL5OwESOTDTc6UXToYm6Vafsw0E0efQlwN9liTKtaO2SJVhMGkMEhgaos/aWX8ReFTi+n0JVV4+lug2Ne+hEVeDpwKx1knuPsIeEjBRFev2AaDb0VS1WmC6XaVG4gdvWP569gTAa6FSjjrxYyweKhrxi2E+AogzUsjbiKfJPP1PSAq237WYGm/66SUJdySRLQdYI4DoGqsMNZeuXKaG1dCmgHEgbFTYZOp6WdtgVXmlJDPqQTXnEpf28V8mApEzMcP90o3TNpjbZCSXyap1jShOtgAAD4YOwNgb/7QZKxtuKQ/0KJYiZ8/9ropiN2ey+e2X+4hezWqTgDWyK42kKwS6hjdhBYcgnD0ctSOxQdgKZT2zcnQ/uh2bJWvfFUc8WugXpBHCryoJkVJ3LPoxegJbSSIphy4y+xqtjGTL0FquZJlfcI3d6kk9Q+pgeEWMCHpInkvqP/rsoCm0KMtyBWrSuZWWf5W6JYw3wAhXZhpg/xFhU9Cm78fp51Df3jHEc/irTz3ZQI7WuqdlV/7Ho072jYSmW+LWAn+egBCRYIHtjn5WhgIRetFQVHxr6Rye7LSrHScgJDqeJNXPOx5mVt3EVnYyGYx1zWa+RHS7Y+ICu5ROnjeg0GlyqkjAYC5hMFF+bBTkkPcec6LInHg7XucV6BFk+wmhBWipaj735uVUG8BQ=
+    properties :
+     x : 99
+     y : 100
+     width : 298
+     height : 24
+    type : 2
+    code_elements :
+     type_code : 3
+     p_codes :
+      -
+        type : 276
+        enabled : false
+      -
+        type : 277
+        enabled : false
+      -
+        type : 278
+        enabled : false
+  -
+    name : SAI_PortUDP
+    identifier : 0x28b2ab0fa9a7bbc6
+    internal_properties : CAAAAAgAAAAA92MfGxkAb0SLSIzIMv3/E6GC2B9SnORB7H3iJppFq6w+YQXg+cOVqVvihomv99gIF5z6OvXmLRjB9EvGxhnUJCojFV4t0NyU5c0TWw5anVTPhdKsMR11X98kn2UMbRZ2SDD+VPSoiOfthM/4tKUwIvehZg72kV4pWYtKCRkSXKtk0OuWLT3TtfvoZSt+mg+W07bdDzYzUY/nUSwfxZvVFXWmjYTOFVITEdf6+QKu2LImZx2mueTsduD+BHhfyrNLK3XpmR+9buESHe2BeV9cy17hdtU3sPfLDKjwqJa90l230ZMPs232EAsAgoyeCWWhnV/cDSV15R5foQT/iTake5aGVm/XsGdRBb5boQwPDf0pjCB4zlYCqjiAwp+8K1xGyDJ+Gl5v6bKzZsXY4YA6/aqCveqUB4YWC/OtC+IyzRR31CR8N/oA/K76Z2VLUHHpIwTXN89iPb6OySzD0exyyrD7XOKxLe1WGD2m2RMzjI1jIs3pO+QVr5HSU5kOv3rDWhji7lHWAKPMarGa1mgEuc6c3ahzH10w5BU8cqReHQZsXJtRJfmVTJNRZwgVf7GyOFxq8AvkSHtViwjSJBM1GuD0fsz7gDshEKyOst/gO2yHJE1CVypB85AqfXwUO7wcefhFSKuhWzLxT+AWs4RIxJ/D+9McIJLNAcaq3CYVZUSyV3HQuuyFqd9eWGL9hXkz+G9QmnHnm4sy7mtO8/vQR8BJOXs1VkhWOCWc7v/M4sOI+EVHWFNHK78Dz5s2vp4pWSq9y3VUN4z6AEazEkz/t8B+N1rPNuXtN/UxAtaMTrllHdBDxhmMo5drADLM16sqXZ5asmyt5HqghiDpzyUFcGLbVqBeJjGKBe5fePenZ45nI4brvmOOmvc3QAu5hUHgigrWuXwpyoVokX9L9BV4Kjtibz3XQLXE5kAiRoTUv+Oheh+3lTRj9rNYtgiJ95OSHbsq4giOaBNTI9Fnltz/zgHKinX071oVjxZnyM0qN7LOikPRCNSibJf+nddv1WXth7vBSNFZewbDJEr9X+oE/SUzh0ahNx/Bi8B6SCOa6S8nFg/NsOusJKSKDT22MkXHT1sGHqKCKh56dLKW64+kV44pGaC1xBCSWXC4rRq9NXjIOw0XefYe63cTjM00F2z9gaK/YHiqBYPBeYZRDF+n5Isfjsg0jEsYY6p/P/oS4MKHYdoTEhQ4YSinhf3fbpzYAToPOWoX77XAyFweJjYRwH0J/fi+N/TVCsAoOQDPYDeARt1n8xulfI5BiSzY1kSNdDuhkJ825qMGllh6Pgp3TWzPb3viETZAtojNKvckRckIXUf9ZhfhC+B45q+rlssIWEbyb3alyaO1G8iT5A8M
+    properties :
+     x : 99
+     y : 74
+     width : 298
+     height : 24
+    type : 2
+    code_elements :
+     type_code : 3
+     p_codes :
+      -
+        type : 276
+        enabled : false
+      -
+        type : 277
+        enabled : false
+      -
+        type : 278
+        enabled : false
+  -
+    name : LIB_ChampVide
+    identifier : 0x28c912d806dae797
+    internal_properties : CAAAAAgAAABv/td6P+z93hEWLnyIyAuWgzefkn67OZ6XYI3sj9fBfE5wCgWvsY/RwV+77X5jTZTM5OH1KcwS01sZ/fxyQgZKmj+/4SZcqxg4EG9GTIzAfScK+aXvqWomkfr4kKKkVq9MRPM3dZaT1n7FZYQBdQMEfvYSqi4pPA1+o7l6yI4LfY4O5UE5tG00PPk0yzGiee6C+Vs/2Fm3Y1VnsH8I1dplOyQ8HbzKGEn9RLJGivDngSWpoz321KtuJ8lwR1TIGJCgskoQKDFvIvT8DXnUj3E+xOCnZaoDnHAanZRUBOt75vE8CZ2ubNpRBT5JMPY4RATPT5nwuRjPhg+MLh5DIZl46yqDvlrYiTVQyz4Yojp1WO3jwaevbO+j1tjBLLYaBClSABpTGSWISOPRYBpgJabIEQKCuNQ5tqQ+RSC6Rs914YqqLNsQU4X547bllDobnXcd0hcXhHH0QT8+r41TlnuQYu6ofXqh/fdlejw+qpWAuJBeIG2JnS5TnDtwMo5y65UY+7k3G7Nck/eEdUdFNdS0sfIjk44J
+    properties :
+     x : 198
+     y : 40
+     width : 199
+     height : 20
+    type : 3
+    code_elements :
+     type_code : 2
+     p_codes : []
+  -
+    name : LIB_Separation
+    identifier : 0x28cfd03f084da0be
+    internal_properties : CAAAAAgAAADZ0zAD0oTNHoI1pRMT5bRifKGwBXmclFDcxYnsK+789lv/rcml8hNSrjLTrdV/1GYrw1kU5PP7NKnGHDsKgKGoBPQoF83fTqj3eYK5dIkCGVYIFfZDcBzrSZKI7y7TeEqOm81ZJWQ1GRT9sAb0P5BM1SHPPEH09TR1JZIQMYD+BOdT2oaYeRmAepkheTqpUdNvRqVn0h6GMJDQhVwt8fvuaL4rsvsVWwpvS38k62CqHFNIsy1rEXakHn+/EQoQ4D26DODR2Ga1bPJev5aw1xwdMcfQzEpIojYCBUaRGZeB8NaX5L+v9NiPjzANd1+QOn4UwpqI1mqRGC9cDHsODZc6jsOWnm8avQmi3Sq5hWKfPiJe1PVY+Hld2Eqteb/A/idvS0VHVKtczKel9uevodq8oH/xjuvhdKLwUSrAKwF0iEY4MrdNs7/Z8e7raTcAd52A7GG5zxRcWBT3EeESbgyPpXdFeBl3iJJ829pZtxFSpSW+3rDLFpPW7p1kikUKq+cdTSUu7dzdo7aWNMkjyxYzyarwKI50HnSAR85veVcva3WsmAQ211oGtTwlfg==
+    properties :
+     x : 99
+     y : 56
+     width : 308
+     height : 20
+    type : 3
+    code_elements :
+     type_code : 2
+     p_codes : []
+ menu :
+  name : _Menu
+  identifier : 0x28b27ad71cc05e47
+  internal_properties : CAAAAAgAAADAfZ27Q+jJ/MBXHLGCb7PyE2Yqjvuo9mAX2ZN+LLuyQtzms1431znXR0sNCCeLESXZp1gqmo+m2mUhb2ELR2phZ8VOgUSyXddfQyxpxffipvH/iiFuFkCLgpjx1Ah9/9/ndeRpWb0s9Qcjy8oPtW3aMcRtuglgDe5Ch9/jnC/Drp19/hhf+qz96diLw5T0yWlzg33c/E8hhMwUBdSOV69/8iDQGLfTvLoTvV3YkiQ5Dce7dxB2gUx1AVvVTykQMm7G+0haIOV568KMGgPEJluRN2XjgQ11Tb8vVxt6P2g=
+  options : []
+ languages :
+  - fr-FR
+ popup_menus : []
+ message_bar :
+  internal_properties : CAAAAAgAAADc1GQ94o9/SDRDmfM9bKLdXR9VK0rX3qzQNxgLTREwyqjz09Swq+McwjWWBzyo1QjRBk3dY7UbLNe40qK/NzgNxrumNSydD8vUTxqrHrn4vnA4c0+k0w7n04Cixj5n
+ actionbar : {}
+ code_elements :
+  internal_properties : CAAAAAgAAAA56n3e9UkRIH0dYK3CV7fOKBbhflmztreeKKq0km/NQDirQ0v7oRqdO7pUzL5JesVK0f9gz5MYXlKElQQbJVx0t1/F+OalPgDRTOT9
+  type_code : 1
+  p_codes :
+   -
+     code : |1+
+      // Initialisation des champs
+      INT_OptionsFiltrage[1]..Valeur = ChargeParamètre("IGMP", Vrai)
+      INT_OptionsFiltrage[2]..Valeur = ChargeParamètre("ICMP", Vrai)
+      INT_OptionsFiltrage[3]..Valeur = ChargeParamètre("UDP", Vrai)
+      INT_OptionsFiltrage[4]..Valeur = ChargeParamètre("TCP", Vrai)
+      SAI_PortTCP = ChargeParamètre("PortTCP", "")
+      SAI_PortUDP = ChargeParamètre("PortUDP", "")
+     type : 34
+   -
+     type : 180
+     enabled : false
+   -
+     type : 230
+     enabled : false
+   -
+     type : 11
+   -
+     type : 12
+   -
+     type : 17
+   -
+     type : 13
+  procedures :
+   -
+     name : VerifierPorts
+     procedure_id : 1787877585475817279
+     type_code : 14
+     code : |1-
+      // Résumé : <indiquez ici ce que fait la procédure>
+      // Syntaxe :
+      //[ <Résultat> = ] VerifierPorts (<sListePort> est chaîne)
+      //
+      // Paramètres :
+      //	sListePort (chaîne) : <indiquez ici le rôle de sListePort>
+      // Valeur de retour :
+      // 	booléen : // 	Aucune
+      //
+      // Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure VerifierPorts(sListePort est une chaine)
+      
+      // Variable
+      sPort est une chaine
+      
+      // Chaine vide, aucun port n'est filtré
+      SI sListePort = "" RENVOYER Vrai
+      
+      POUR TOUTE CHAINE sPort DE sListePort SEPAREE PAR ";"
+      	// Si Val = 0 c'est que ce n'est pas un nombre qui a été inséré
+      	SI Val(sPort) = 0 ALORS
+      		Renvoyer Faux
+      	FIN
+      FIN
+      
+      RENVOYER Vrai
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : _Vista_01
+resources :
+ string_res :
+  identifier : 0x18b27acf01573ea9
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+  strings :
+   -
+     text :
+      fr-FR : L'IP renseignée n'est pas au bon format
+     index : 0
+   -
+     text :
+      fr-FR : La liste des ports UDP est mal formatée.
+     index : 1
+   -
+     text :
+      fr-FR : La liste des ports TCP est mal formatée.
+     index : 2
+   -
+     text :
+      fr-FR : Chaque port doit être séparé par un point-virgule et sa valeur ne doit pas dépasser 65535.
+     index : 3
+   -
+     text :
+      fr-FR : Chaque port doit être séparé par un point-virgule et sa valeur ne doit pas dépasser 65535.
+     index : 4
+   -
+     text :
+      fr-FR : "Exemple : 80;20;21"
+     index : 5
+   -
+     text :
+      fr-FR : "Exemple : 80;20;21"
+     index : 6
+custom_note :
+ internal_properties : CAAAAAgAAAC68/W0/adbG0nFCRhrE42B5HRnbDzVHaz86sSQyxlBk7I=
+rad :
+ internal_properties : CAAAAAgAAABoAN7PLpwJW3EiA7WVZdCA5EwrCA1rvutcDHooMWKe

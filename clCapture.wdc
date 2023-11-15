@@ -1,0 +1,577 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : cCapture
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x18ade7ee005ac5ec
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  internal_properties : CAAAAAgAAAAH/GKRekTvwCmfVhmrJPOaYlKpsJhyPdxJ5I6rVb9U7NwqeejZAzgIgFOO0z4zTJV2X2P1qUodJCvwXChyIvKrDodFHaHoLu8=
+  type_code : 10
+  p_codes :
+   -
+     internal_properties : CAAAAAgAAACLS/k4hpQK8r0l8Q8+HQQu9WJYuEbdhxjjOJHC3V+4vEVpGHZRwszRSkwKSo3LOdfbdMTdgq0Wy71sABAfaGxoejwa3g3MQQKPQP5DK71o7gzB1ETPtQK5s9gwRFl3Hr52+K268RO2u2gaWrGHtydt2uB2xgDi5Q/0a9G95pedEwZ+hPU2WN1WubPty/VopGc=
+     code : |1+
+      CONSTANTE		
+      	// Constantes WinSock tirés de winsock2.h (Windows Platform SDK)
+      	AF_INET            = 2
+      	SOCK_RAW           = 3
+      	IPPROTO_IP         = 0
+      	IOC_VENDOR         = 0x18000000
+      	IOC_IN             = 0x80000000
+      	INADDR_NONE        = -1
+      	WSADESCRIPTION_LEN = 256
+      	WSASYS_STATUS_LEN  = 128
+      	TAILLE_MAXIMUM     = 65536
+      	DLL_NOM            = "ws2_32.dll"
+      FIN
+      
+      // Structure permettant de spécifier l'adresse à associer au Socket (fonction bind)
+      sockaddr_in est une structure
+      	sin_family est un entier sans signé sur 2 octets
+      	sin_port   est un entier sans signé sur 2 octets
+      	sin_addr   est un entier sans signe sur 4 octets
+      	sin_zero   est un tableau fixe de 8 entier sur 1 octet
+      FIN
+      
+      // Structure contenant les propriétés de la version de WinSock
+      WSAData est une structure
+      	wVersion       est un entier sans signe sur 2 octets
+      	wHighVersion   est un entier sans signe sur 2 octets
+      	szDescription  est un tableau fixe de (::WSADESCRIPTION_LEN+1) entier sur 1 octet
+      	szSystemStatus est un tableau fixe de (::WSASYS_STATUS_LEN+1) entier sur 1 octet
+      	iMaxSockets    est un entier sans signe sur 2 octets
+      	iMaxUdpDg      est un entier sans signe sur 2 octets
+      	lpVendorInfo   est un entier système
+      FIN
+      
+      //
+      // Classe permettant de capturer des packets entrant et sortant sur une interface Ethernet
+      //
+      cCapture est une classe
+      	// Membres
+      	PRIVE
+      		_nSocket     est un entier
+      		_SIO_RCVALL  est un entier sur 4 octets
+      		_sCallBack   est une chaine
+      		_hHinst      est un entier
+      		_taPacket    est un tableau de 0 cPacket dynamique
+      		_ICMP        est un booléen
+      		_IGMP        est un booléen
+      		_TCP         est un booléen
+      		_UDP         est un booléen
+      		_UDPPortOK   est une chaine
+      		_TCPPortOK   est une chaine
+      		_IPFiltre    est une chaine
+      		_DuréeDepart est une heure
+      		_NbPacketMax est un entier
+      		_bSansLimite est un booléen
+      Fin
+      
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1778332437275461100
+     type_code : 27
+     code : |1-
+      Procédure Constructeur(sCallBack est une chaine)
+      
+      // Initialisation
+      :_sCallBack  = sCallBack
+      :_SIO_RCVALL = OUBinaire(OUBinaire(::IOC_IN,::IOC_VENDOR),1)
+      :_hHinst     = ChargeDLL(::DLL_NOM)
+      
+      // Initialisation des membres de filtrage
+      :_IPFiltre  = NetAdresseIP(NetNomMachine())
+      :_ICMP      = Vrai
+      :_TCP       = Vrai
+      :_UDP       = Vrai
+      :_UDPPortOK = ""
+      :_TCPPortOK = ""
+      
+      RENVOYER Vrai
+     type : 589824
+   -
+     name : Destructeur
+     internal_properties : CAAAAAgAAAD/1TsypvX83PwEhO+Xf7fRwiC3Nyd0ShJlVtInmnHFu7RN/SHdV57jWQ/ggbRo8+IkYrKE91rRd3h08k+65YnMF8+PB2LJ3GEcnNyH6SV/B7k92cYyA3MRjIS4iDkP/w5DLTRM2HRR7JAcMPE0f1gxPbqeN6IuAB3oRmZK96U15R+ynuKwkNiXOe9gKrcBNhcA/wiba/qBV1QK81EeBIhAtSs325JBzdBFMoRTX+VQKtJm
+     procedure_id : 1778332437275526636
+     type_code : 28
+     code : |1+
+      Procédure Destructeur()
+      
+      // Fermeture Socket
+      API(::DLL_NOM,"closesocket",::_nSocket);
+      
+      // Désinitialisation Winsock
+      API(::DLL_NOM,"WSACleanup");
+      
+      // On arrête le thread
+      ThreadArrête("Capture")
+      
+      // On décharge la DLL
+      DéchargeDLL(:_hHinst)
+     type : 655360
+   -
+     name : DemarrerCapture
+     internal_properties : CAAAAAgAAADfx54lwAvlzcTY9+iIk2b1odx3Xw/1cC23bb2pqTCxC27SAJPG5s/w0glS1XU7dfp37CQ+1I0gp8kmBzxl7Y0BXPydSzSUZJZxDmGNJOfN12nJTIJQ0sMQr59kbMML6vTFLFsV91WAjXERzRz/tC3M5hFp/O2T+7rPme3LlhZCoJTpYR95j4kWuERfY2Zy53yXfMkMtu6NW8qy7xXWbPihILIIjLYNybtg++/pq7d7G4oOS5NfoN7B4QnLkh8Zq0bETA==
+     procedure_id : 1778332437275592172
+     type_code : 12
+     code : |1-
+      // Résumé : Démarre la capture sur l'adresse IP donnée en paramètre
+      // Syntaxe :
+      //[ <Résultat> = ] DemarrerCapture (<sIP> est chaîne)
+      //
+      // Paramètres :
+      //	sIP (chaîne) : Adresse IP sur laquelle il faut écouter le réseau
+      // Valeur de retour :
+      // 	Type indéterminé :  // Renvoi l'identifiant de Socket
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure DemarrerCapture(sIP est une chaine)
+      
+      // Variable
+      nErreur    		  est un entier
+      dest       		  est une sockaddr_in
+      nOption    		  est un entier sans signé
+      dwBytesRet 		  est un entier
+      nAdresse   		  est un entier sans signe sur 4 octets
+      wVersionRequested est un entier sans signe sur 2 octets
+      data              est un WSAData;
+      
+      // Initialisation
+      nOption = 1 // Valeur du paramètre pour WSAIoctl (afin de tout recevoir)
+      
+      // On libère les packets précédemment capturés
+      POUR I=1 _A_ Dimension(:_taPacket)
+      	Libérer :_taPacket[i]
+      FIN
+      
+      // Vide le tableau
+      TableauSupprimeTout(:_taPacket)
+      
+      // Initialisation WinSock
+      wVersionRequested = 514
+      nErreur = API(::DLL_NOM,"WSAStartup",wVersionRequested, &data)
+      SI (nErreur <> 0) ALORS
+      	Erreur(<§$0000§>)
+      	RENVOYER Faux
+      FIN
+      
+      // Création Socket
+      :_nSocket = API(::DLL_NOM, "socket", ::AF_INET, ::SOCK_RAW, ::IPPROTO_IP);
+      
+      SI :_nSocket = 0 ALORS
+      	nErreur = API(::DLL_NOM,"WSAGetLastError")
+      	Erreur(<§$0000§>)
+      	RENVOYER Faux
+      FIN
+      
+      // On transforme l'IP passée en paramètre en entier sur 4 octets
+      nAdresse = API(::DLL_NOM, "inet_addr",sIP);
+      
+      SI nAdresse = ::INADDR_NONE ALORS
+      	nErreur = API(::DLL_NOM,"WSAGetLastError")
+      	Erreur(<§$0000§>)
+      	RENVOYER 0
+      FIN
+      
+      // Binding de la socket sur l'IP sélectionnée
+      VariableRAZ(dest)
+      dest:sin_addr   = nAdresse
+      dest:sin_family = ::AF_INET;
+      dest:sin_port   = 0;
+      
+      nErreur = API(::DLL_NOM,"bind",:_nSocket,&dest,Dimension(dest)) 
+      
+      SI (nErreur = -1) ALORS
+      	nErreur = API(::DLL_NOM,"WSAGetLastError")
+      	Erreur(<§$0000§>)
+      	REnvoyer 0
+      FIN
+      
+      // Changement du mode du socket
+      nErreur = API(::DLL_NOM,"WSAIoctl", :_nSocket, ::_SIO_RCVALL, &nOption, Dimension(nOption), 0, 0, &dwBytesRet,0, 0)
+      
+      SI (nErreur = -1) ALORS
+      	nErreur = API(::DLL_NOM,"WSAGetLastError")
+      	Erreur(<§$0000§>)
+      	RENVOYER 0
+      FIN
+      
+      // On lance la capture dans un thread séparé
+      ThreadExécute("Capture",threadNormal,:ThreadCapture)
+      
+      RENVOYER :_nSocket
+     type : 458752
+   -
+     name : ThreadCapture
+     internal_properties : CAAAAAgAAAAo+j9OzBlVG1sFz9CtEkM950bWg093UE/RiE5rTr9cBf9lIV099zD82t2Ptk5aeAe+fnSzT8UDXMUHMJRpoSMW4NHFsgO/66jnGQ55F/Vi/lpPieRidkBQHcX4zpfzWtcdMwWrKnlAVqC76ZWyR8fp/ffdGKGegYLnlq3vCh1X5aoxZjnw3BpybP7U2bHl+K3/hNN3lAWJPqpCKyzA4V3qTegoVQPVty/yblHu/T3pLwYIXFjtPjMJJAACCKnlgew26vhHg+wDaHSA2DF/w3dvj/NMwzHwGC/kr2+fNpxd/BHZ+VF7qMjq1Sxq4Rp0dqZMQ1N8D83aOMEQ8TbSYCI3Kg==
+     procedure_id : 1778332437275657708
+     type_code : 12
+     code : |1+
+      // Résumé : Thread qui capture les packets et appelle la callback nécessaire
+      // Syntaxe :
+      //ThreadCapture ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure PRIVEE ThreadCapture()
+      
+      // Variables
+      nBuffer  est un tableau fixe de ::TAILLE_MAXIMUM entier sans signe sur 1 octet
+      nNbByte  est un entier
+      clPacket est un cPacket dynamique
+      rDurée   est un réel
+      
+      // Initialisation
+      clPacket = Null
+      
+      // On boucle sans fin tant que le thread n'est pas arrête pour écouter tous les packets
+      BOUCLE
+      	// On vide le buffer
+      	POUR I=1 _à_ ::TAILLE_MAXIMUM
+      		nBuffer[I] = 0	
+      	FIN
+      	
+      	// Ré-initialisation du pointeur
+      	clPacket = Null
+      	
+      	// Capturer des packets uniquement si la limite n'est pas atteinte
+      	SI (:_taPacket..Occurrence < :_NbPacketMax) OU (:_bSansLimite) ALORS	
+      		// On reçoit les paquets
+      		nNbByte = API(::DLL_NOM,"recvfrom",:_nSocket,&nBuffer,::TAILLE_MAXIMUM,0,0,0)
+      	
+      		// Si l'on a reçut des données, on instancie une nouvelle classe cPacket à partir du buffer et on appelle
+      		// le callback utilisateur passé en paramètre au constructeur.
+      		SI nNbByte > 0 ALORS
+      			// Calcul de la durée, si c'est le premier packet le tableau est vide, donc la durée est de 0
+      			SI Dimension(:_taPacket) > 0 ALORS
+      				rDurée = (HeureDifférence(:_DuréeDepart, HeureSys())) / 100
+      			SINON
+      				:_DuréeDepart = HeureSys()
+      				rDurée = 0
+      			FIN
+      			
+      			// Si c'est un protocole géré, on instancie un packet sinon on ne le traite pas
+      			SELON nBuffer[10]
+      				CAS cPacket::ICMP:
+      					clPacket = allouer un cPacketICMP(rDurée)
+      				CAS cPacket::TCP:
+      					clPacket = allouer un cPacketTCP(rDurée)
+      				CAS cPacket::UDP:
+      					clPacket = allouer un cPacketUDP(rDurée)
+      				CAS cPacket::IGMP:
+      					clPacket = allouer un cPacketIGMP(rDurée)
+      			FIN
+      			
+      			SI clPacket <> nULL alors	
+      				// Analyse des entêtes	
+      				clPacket:processPacket(nBuffer, nNbByte)
+      				
+      				// Si le packet passe les filtres positionnés, on l'ajoute
+      				SI :packetAutorisé(clPacket) ALORS
+      					TableauAjoute(:_taPacket,clPacket)
+      					Exécute(:_sCallBack,clPacket)
+      				SINON
+      					// Sinon on le libère
+      					libérer clPacket
+      					clPacket = Null
+      				FIN	
+      			fin
+      		FIN
+      	FIN
+      A FAIRE TANTQUE nNbByte > 0
+     type : 458752
+   -
+     name : ArreterCapture
+     internal_properties : CAAAAAgAAADFVg7os+wldxGO7EgS0j3tlVzQ1TVCjk1L5ZRb8y5KqezUO9h9ZCIao3cN82U0rFv9SS1dBFDjO4xAR3Y5OIk8oxgJa+MeEEl9m4scqgjugcPINKYm+00nRLvxBEFbn9pkNzWcQHAY5wipYTM+aW4PjLapLfqye7zmNZeyNYPJ/dz2GbT8qNMaYfwB0BthosNvI9eLY+7Aiu6PakPqZMy7k230FCWqrxdJV3/IqJCqyH+bqJ8=
+     procedure_id : 1778332437275723244
+     type_code : 12
+     code : |1+
+      // Résumé : Arrête la capture en cours
+      // Syntaxe :
+      //ArreterCapture ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure ArreterCapture()
+      
+      // Fermeture Socket
+      API(::DLL_NOM,"closesocket",:_nSocket);
+      
+      // Désinitialisation Winsock
+      API(::DLL_NOM,"WSACleanup");
+      
+      // On arrête le thread
+      SI threadEtat("Capture") = threadEnCours ALORS
+      	ThreadArrête("Capture")
+      FIN
+      
+     type : 458752
+   -
+     name : packetAutorisé
+     internal_properties : CAAAAAgAAABQjUMESuLHlktbtpZCmb2zQfnOjVC/oXYrsb8Rrg3LrI/KFWhKQE8x7FtanLAqD6EdZHenochQN6lj6ZKrVKk06dZaCwrEmtAjNHs/1W9RTlkS8vmj5AQzwAQk/8OYSUvUQSxNCJ20/9L+dpwcJIhKLqbMVETZAZau3IKDcWojksyyVssWPRRhke3yFuGHM3fQi8c1IuHO/tvU5r2XOja6Tx8T
+     procedure_id : 1779661974499488887
+     type_code : 12
+     code : |1-
+      // Résumé : Vérifie si le packet doit être utilisé par rapport aux filtres posés
+      // Syntaxe :
+      //[ <Résultat> = ] packetAutorisé (<pclPacket> est cPacket dynamique)
+      //
+      // Paramètres :
+      //	pclPacket (cPacket dynamique) : Packet à vérifier
+      // Valeur de retour :
+      // 	booléen : // Vrai si il passe les filtres, sinon Faux
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure PRIVEE packetAutorisé(pclPacket est un cPacket dynamique)
+      
+      // Variables
+      pclPacketUDP  est un cPacketUDP dynamique
+      pclPacketTCP  est un cPacketTCP dynamique
+      
+      // On filtre les IPs
+      SI (pclPacket:getIPDestinataire() <> :_IPFiltre) ET (pclPacket:getIPSource() <> :_IPFiltre) ALORS
+      	Renvoyer Faux
+      FIN
+      
+      // On filtre le protocole
+      SELON pclPacket..Classe
+      	CAS cPacketIGMP:
+      		
+      	CAS cPacketUDP:		
+      		// UDP accepté ou non ?
+      		SI :_UDP = Faux ALORS
+      			Renvoyer Faux
+      		SINON
+      			// Il faut vérifier que les ports sont dans la liste de ceux acceptés
+      			pclPacketUDP = pclPacket
+      			SI Taille(:_UDPPortOK) > 0 ALORS
+      				SI (ChaîneOccurrence(:_UDPPortOK,pclPacketUDP:getUDPPortSource()) > 0) OU (ChaîneOccurrence(:_UDPPortOK,pclPacketUDP:getUDPPortDestinataire()) > 0) ALORS
+      					RENVOYER Vrai
+      				SINON
+      					RENVOYER Faux
+      				FIN
+      			SINON
+      				Renvoyer Vrai
+      			FIN
+      		FIN
+      	CAS cPacketICMP:
+      		// ICMP accepté ?
+      		SI :_ICMP = Faux ALORS
+      			RENVOYER Faux
+      		SINON
+      			RENVOYER Vrai
+      		FIN
+      	CAS cPacketTCP:
+      		// TCP accepté ?
+      		SI :_TCP = Faux ALORS
+      			RENVOYER Faux
+      		SINON
+      			// Il faut vérifier que les ports sont dans la liste de ceux acceptés
+      			pclPacketTCP = pclPacket
+      			SI Taille(:_TCPPortOK) > 0 ALORS
+      				SI (ChaîneOccurrence(:_TCPPortOK,pclPacketTCP:getTCPPortSource()) > 0) OU (ChaîneOccurrence(:_TCPPortOK,pclPacketTCP:getTCPPortDestinataire()) > 0) ALORS
+      					RENVOYER Vrai
+      				SINOn
+      					RENVOYER Faux
+      				FIN
+      			SINON
+      				Renvoyer Vrai
+      			FIN
+      		FIN		
+      	AUTRE CAS
+      		Erreur(<§$0001§>)	
+      FIN
+      
+      RENVOYER Faux
+     type : 458752
+   -
+     name : CapturerUDP
+     procedure_id : 1779675069854808642
+     type_code : 12
+     code : |1-
+      // Résumé : Paramètre la capture UDP
+      // Syntaxe :
+      //CapturerUDP (<bCapturer> est booléen [, <sListePort>])
+      //
+      // Paramètres :
+      //	bCapturer (booléen) : Indique si oui ou non il faut capturer l'UDP
+      // 	sListePort : Indique les ports à capturer
+      // Valeur de retour :
+      // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure CapturerUDP(bCapturer est un booléen,sListePort="")
+      
+      // Liste des ports UDP autorisés
+      :_UDPPortOK = sListePort
+      // UDP accepté ou non
+      :_UDP = bCapturer
+     type : 458752
+   -
+     name : CapturerTCP
+     procedure_id : 1779675138574367367
+     type_code : 12
+     code : |1-
+      // Résumé : Paramètre la capture TCP
+      // Syntaxe :
+      //CapturerTCP (<bCapturer> est booléen [, <sListePort>])
+      //
+      // Paramètres :
+      //	bCapturer (booléen) : Indique si oui ou non il faut capturer le TCP
+      // 	sListePort : Indique les ports à capturer
+      // Valeur de retour :
+      // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure CapturerTCP(bCapturer est un booléen,sListePort="")
+      
+      // Liste des ports TCP autorisés
+      :_TCPPortOK = sListePort
+      // TCP accepté ou non
+      :_TCP = bCapturer
+     type : 458752
+   -
+     name : CapturerICMP
+     procedure_id : 1779675160049274461
+     type_code : 12
+     code : |1+
+      // Résumé : Paramètre la capture ICMP
+      // Syntaxe :
+      //[ <Résultat> = ] CapturerICMP (<bCapturer> est booléen)
+      //
+      // Paramètres :
+      //	bCapturer (booléen) : Indique si oui ou non il faut capturer l'ICMP
+      // Valeur de retour :
+      // 	booléen :  // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure CapturerICMP(bCapturer est un booléen)
+      
+      // ICMP accepté ou non
+      :_ICMP = bCapturer
+      
+      RENVOYER :_ICMP
+     type : 458752
+   -
+     name : CaptureIP
+     procedure_id : 1779685940418929926
+     type_code : 12
+     code : |1-
+      // Résumé : Paramètre le filtre sur adresse IP
+      // Syntaxe :
+      //[ <Résultat> = ] CaptureIP (<sIP> est chaîne)
+      //
+      // Paramètres :
+      //	sIP (chaîne) : IP à filtrer
+      // Valeur de retour :
+      // 	booléen :  // Vrai si OK, sinon Faux
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure CaptureIP(sIP est une chaine)
+      
+      // Variable
+      nAdresse est un entier sur 4 octets
+      
+      // On transforme l'IP passée en paramètre en entier sur 4 octets
+      nAdresse = API(::DLL_NOM, "inet_addr",sIP);
+      
+      // Si le filtre sur IP passé en paramètre est mauvais on renvoi faux et on garde l'ancienne valeur
+      SI nAdresse = ::INADDR_NONE ALORS
+      	RENVOYER Faux
+      SINON
+      	:_IPFiltre = sIP
+      	RENVOYER Vrai
+      FIN
+     type : 458752
+   -
+     name : CapturerLimite
+     internal_properties : CAAAAAgAAABEmb9wXq4Tgu/vChomzSFn3V1C4HyRjcRx3fGpPDtJtA1K/WQ6XmcTat8ApCL0EW1XKCMPjbaQRV//JwJZkm8kR276J9bmllJtBBEf0y1bYhsFn244DWPAeecxwJQ1Kiw3NDnyVVZz3OtF15nJDYHPtTVNPf12pIsPG0uYThvwW99lkwBT/sv2RjyrC97AuHvE10tx9iVKykcgsun7NiquQwsH
+     procedure_id : 1786033721676578300
+     type_code : 12
+     code : |1-
+      // Résumé : Limite le nombre de packet capturés
+      // Syntaxe :
+      //CapturerLimite (<nNombrePacket> est entier)
+      //
+      // Paramètres :
+      //	nNombrePacket (entier) : Nombre de packet maximum a capturer
+      // Valeur de retour :
+      // 	Aucune
+      //// Exemple :
+      // CaptureLimite(100)
+      //
+      Procédure CapturerLimite(nNombrePacket est un entier)
+      
+      SI nNombrePacket = 0 ALORS
+      	:_bSansLimite = Vrai
+      SINON
+      	:_bSansLimite = Faux
+      FIN
+      
+      :_NbPacketMax = nNombrePacket
+     type : 458752
+   -
+     name : CapturerIGMP
+     procedure_id : 1225268051186399156
+     type_code : 12
+     code : |1-
+      // Résumé : Paramètre de capture IGMP
+      // Syntaxe :
+      //[ <Résultat> = ] CapturerIGMP (<bCapturer> est booléen)
+      //
+      // Paramètres :
+      //	bCapturer (booléen) : Vrai pour capture ou non
+      // Valeur de retour :
+      // 	booléen : // 	Aucune
+      //
+      PROCEDURE CapturerIGMP(bCapturer est un booléen)
+      
+      // IGMP accepté ou non
+      :_IGMP = bCapturer
+      
+      RENVOYER :_IGMP
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : CClasse1
+resources :
+ string_res :
+  identifier : 0x189b0b83005efa8e
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+  strings :
+   -
+     text :
+      fr-FR : Vérifier que vous utilisez un compte Administrateur
+     index : 0
+   -
+     text :
+      fr-FR : Erreur interne - PacketAutorisé() - Classe inconnue
+     index : 1
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

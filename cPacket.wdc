@@ -1,0 +1,736 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : cPacket
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x18a21a75000e22f5
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     internal_properties : CAAAAAgAAAAtk2cTvApW/rJRpbCoyPt3TKrPrauF33BvYU2dR/G2eEFS4NTlp7N3ornGOExEeue7eRQsSHMVOpRdQz9ncowHo2fR1jeQkGlNVTHuhlzBiUscyt2Fzs9Vnb420krJXWheDPgd0aAZjwlPX6RO4jcs3R9gFnTQsQAvgNyNHB4QZslX1I6C+TlBFq4tw0j+PkSxmzqrtesxlA0vjB6sFw==
+     code : |1+
+      
+      CONSTANTE
+      	// Valeurs des protocoles dans l'entête IP V4
+      	ICMP = 1
+      	TCP  = 6
+      	UDP  = 17	
+      	IGMP = 2
+      FIN
+      
+      // 
+      // Classe représentant un packet circulant sur un réseau Ethernet en IPV4
+      // Les protocoles détectées sont ICMP, UDP et TCP
+      //
+      cPacket est une classe		
+      	// Membres communs à tout les packets qu'ils soient ICMP, TCP ou UDP
+      	PROTEGE
+      		_sIPSource       est une chaine
+      		_sIPDest         est une chaine
+      		_sProtocole      est une chaine 
+      		_IPVers          est un entier sans signe sur 1 octet
+      		_IPIHL           est un entier sans signe sur 1 octet
+      		_IPPriorité      est un entier sans signe sur 1 octet
+      		_IPDélai         est un entier sans signe sur 1 octet
+      		_IPDébit         est un entier sans signe sur 1 octet
+      		_IPFiabilité     est un entier sans signe sur 1 octet
+      		_IPCout          est un entier sans signe sur 1 octet	
+      		_IPMBZ           est un entier sans signe sur 1 octet
+      		_IPLongueur      est un entier sans signe sur 2 octets
+      		_IPIdentifiant   est un entier sans signe sur 2 octets
+      		_IPReserve       est un entier sans signe sur 1 octet
+      		_IPDontFragment	 est un entier sans signe sur 1 octet
+      		_IPMoreFragment  est un entier sans signe sur 1 octet
+      		_IPPositionFrag  est un entier sans signe sur 2 octets
+      		_IPTTL           est un entier sans signe sur 1 octet
+      		_IPProtocole     est un entier sans signe sur 1 octet  // Numéro protocole (ICMP, UDP, TCP)
+      		_IPChecksum      est un entier sans signe sur 2 octets
+      		_nIPSource       est un entier sans signe sur 4 octets
+      		_nIPDest         est un entier sans signe sur 4 octets
+      		_AppProtocole    est une chaine
+      		_nPacket         est un tableau fixe de cCapture::TAILLE_MAXIMUM entiers sans signe sur 1 octet // Le packet en lui même
+      		_nData           est un tableau de 1 entier sans signe sur 1 octet 							    // Données du packet
+      		_hHinst          est un entier système    													    // Instance de chargement de la DLL
+      		_nOctetReçus     est un entier
+      		_rDurée          est un réel
+      	
+      	// Membre global qui ne dépend pas d'une instance
+      	PROTEGE GLOBAL
+      		_ListePort       est un tableau associatif de chaines
+      Fin
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1775010292951884533
+     type_code : 27
+     code : |1+
+      Procédure PROTEGE Constructeur(rDurée est un réel)
+      
+      // Chargement de la DLL WinSock
+      :_hHinst = ChargeDLL(cCapture::DLL_NOM)
+      
+      // Affectation de la durée (nombre de secondes depuis le début de la capture)
+      :_rDurée = rDurée
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1775010292951950069
+     type_code : 28
+     code : |1-
+      Procédure Destructeur()
+      
+      // On décharge la DLL
+      DéchargeDLL(:_hHinst)
+     type : 655360
+   -
+     name : getIPProtocole
+     internal_properties : CAAAAAgAAAAr9yUhSoFu+QzhSwJjz3wUJmkle8LJ4ZDZROK7Un//lLq3Mwv37vUyZB7FM+Vzki0XFg6Yj0x38SKaC1WvoGUU/KSCJzkyd85zSKsDVTuA12T1+sXcEtGKpbSUo5rqjjvdWMoZB1kLmNnyQi557mF8AeNGILNpREc95HDxbAS6V4qyQzz+ygSFF+of5wHu58piGSXQ
+     procedure_id : 1775273772016539280
+     type_code : 12
+     code : |1+
+      // Résumé : Retourne le protocole IP du packet
+      // Syntaxe :
+      //[ <Résultat> = ] getIPProtocole ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	chaîne :     // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPProtocole()
+      
+      RENVOYER :_sProtocole
+      
+     type : 458752
+   -
+     name : processPacket
+     internal_properties : CAAAAAgAAABujv3qtvjPhNEniDYUWw+3x5E6thDPYbZL0T/hzu3bbM+qtZhaYL8BfGsq3EDa7zEN1AcHoViQN4kjSUJr1Ll0CfY6+3qE6oDzROv/Zd+RvinK6rELbMzLmMwcB4uwgYP8mYQlMIWcl8qGjuSkXMCC1h5kzOxBqc6GhDormaJ76jTqbmP+BZyZabUq3qn/K+gbapD++87py7BDv8KkOzcNNiEt
+     procedure_id : 1775274639600004235
+     type_code : 12
+     code : |1+
+      // Résumé : Traite un packet pour extraire les informations
+      // Syntaxe :
+      //processPacket (<nBuffer>, <nOctetLut> est entier)
+      //
+      // Paramètres :
+      //	nBuffer : Le packet
+      //	nOctetLut (entier) : Nombre d'octets lus
+      // Valeur de retour :
+      // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure VIRTUELLE processPacket(nBuffer, nOctetLut est un entier)
+      
+      // Variables
+      nAdresseChaîne est un entier système
+      
+      // Sauvegarde des données, copie du tableau
+      POUR I = 1 _A_ 65536
+      	:_nPacket[I] = nBuffer[I]
+      FIN
+      
+      // Positionnement du nombre d'octet reçus
+      :_nOctetReçus = nOctetLut
+      
+      // On alimente l'entête IP
+      :processIPHeader()
+      
+      // Affectation des IP
+      // On transforme les IPV4 qui sont des entiers sur 4 octets en chaine de type "192.168.0.2" par exemple
+      // Cela grâce à la fonction 'inet_ntoa' de l'API WinSock.
+      nAdresseChaîne = API(cCapture::DLL_NOM,"inet_ntoa",:_nIPSource)
+      :_sIPSource = ChaîneRécupère(nAdresseChaîne, crAdresseASCIIZ)
+      nAdresseChaîne = API(cCapture::DLL_NOM,"inet_ntoa",:_nIPDest)
+      :_sIPDest = ChaîneRécupère(nAdresseChaîne, crAdresseASCIIZ)
+      
+      // Protocole
+      SELON :_IPProtocole
+      	CAS ::IGMP :
+      		:_sProtocole = "IGMP"
+      	CAS ::ICMP  : 
+      		:_sProtocole = "ICMP"
+      	CAS ::TCP  : 
+      		:_sProtocole = "TCP"
+      	CAS ::UDP : 
+      		:_sProtocole = "UDP"
+      	AUTRE CAS : 
+      		Erreur(<§$0000§>)
+      FIN
+     type : 458752
+   -
+     name : getIPSource
+     procedure_id : 1775275343974739086
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne l'IP source
+      // Syntaxe :
+      //[ <Résultat> = ] getIPSource ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 4 octets :    // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPSource()
+      
+      RENVOYER :_sIPSource
+     type : 458752
+   -
+     name : getIPDestinataire
+     procedure_id : 1775275365449646587
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne l'IP destinataire
+      // Syntaxe :
+      //[ <Résultat> = ] getIPDestinataire ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 4 octets :    // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPDestinataire()
+      
+      RENVOYER :_sIPDest
+     type : 458752
+   -
+     name : getData
+     internal_properties : CAAAAAgAAAAxidMvT7eQr5yppcIvz7RMOm0lYbjvN6IR1Ch7Rr9HxM7DJ+XpqPPY6IrHmxnXYm1LumrioT7xc54WNS3bbB28XIzOafPUUaATKFJahioxFjvE3Vg1+aibStUz+gthF3KU15EA7IxWZdqHNTEegbrL8OpF//AE5yiysZO88YdvqnWtSiPbJWdu/Ct6WvbZ0NBoJzvK
+     procedure_id : 1775275494298826461
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne le contenu du packet
+      // Syntaxe :
+      //[ <Résultat> = ] getData ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	tableau :  // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure  getData()
+      
+      RENVOYER :_nData
+     type : 458752
+   -
+     name : processIPHeader
+     internal_properties : CAAAAAgAAADEGT9gRqQXxqe+5GrrNoMJlVVvDWdCLRI7PbuJDi1nHMdmJayK4NOtJJ9GdBj6gwH9QFeD6WCcs2nf3dKTJO1cAVoyH0rE5sybqF9P9b9tbgnssIchCi7NoqZaXSn+4+maOzKTtjueyfygnNIKqmKgjACiajI/sxiQFkDpVzjt2ELEhDE8y6YDS7fAfJ/oAx+BOIgQmfsxQ6AenJt1rrouw4uH
+     procedure_id : 1775591453567054780
+     type_code : 12
+     code : |1+
+      // Résumé : Traite l'entête IP
+      // Syntaxe :
+      //processIPHeader ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure PRIVEE processIPHeader()
+      
+      // Variable pour la position du fragment
+      nPositionFlag est un entier sans signe sur 2 octets
+      nPremierOctet est un entier sans signe sur 1 octet
+      
+      // Initialisation
+      nPremierOctet = ETBinaire(:_nPacket[7],0x1F) // On élimine les 3 premiers bits de poids fort qui sont des flags
+      nPositionFlag = nPremierOctet * 256 + :_nPacket[8]
+      
+      // Remplissage de l'entête a partir du packet
+      :_IPVers = ETBinaire(:_nPacket[1] ,0xF0) / 16
+      :_IPIHL = ETBinaire(:_nPacket[1], 0x0F)
+      :_IPPriorité = ETBinaire(:_nPacket[2], 0xE0) / 32
+      :_IPDélai = ETBinaire(:_nPacket[2], 0x10) / 16
+      :_IPDébit = ETBinaire(:_nPacket[2], 0x08) / 8
+      :_IPFiabilité = ETBinaire(:_nPacket[2], 0x04) / 4
+      :_IPCout = ETBinaire(:_nPacket[2], 0x02) / 2
+      :_IPLongueur = (:_nPacket[3] * 256) + :_nPacket[4]
+      :_IPIdentifiant = (:_nPacket[5] * 256) + :_nPacket[6]
+      :_IPReserve = ETBinaire(:_nPacket[7], 0x80) / 128
+      :_IPDontFragment = ETBinaire(:_nPacket[7], 0x40) / 64
+      :_IPMoreFragment = ETBinaire(:_nPacket[7], 0x20) / 32
+      :_IPPositionFrag = nPositionFlag
+      :_IPTTL = :_nPacket[9]             
+      :_IPProtocole = :_nPacket[10]
+      :_IPChecksum = (:_nPacket[11] * 256) + :_nPacket[12]
+      Transfert(&:_nIPSource,&:_nPacket[13],4)
+      Transfert(&:_nIPDest,&:_nPacket[17],4)
+     type : 458752
+   -
+     name : getIPChecksum
+     internal_properties : CAAAAAgAAADHG8E9vD1O1bDtLy6jy0xsKm1l/5796QzNWHa3auMftJ4Lox8Dyi3WwIJ5n8UX6h1bWh4Mo5jndV4eV9FftCUkwPiCM50uB5Lv7MUtU3VqHaLbrFcKLOukQ6aeXfBMoMnzruyzfbN1QjeUZNDfiENSzzFA4jHrtnGr1mL72u50rfgAXT7EDE4Xhfwpke8QOb52Ncm8
+     procedure_id : 1776765813591403040
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne le checksum
+      // Syntaxe :
+      //[ <Résultat> = ] getIPChecksum ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 2 octets : // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPChecksum()
+      
+      RENVOYER :_IPChecksum
+     type : 458752
+   -
+     name : getIPIHL
+     procedure_id : 1776765895195866388
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne l'IP IHL
+      // Syntaxe :
+      //[ <Résultat> = ] getIPIHL ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 1 octet : // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPIHL()
+      
+      RENVOYER :_IPIHL
+     type : 458752
+   -
+     name : getIPIdentifiant
+     procedure_id : 1776765925260710652
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne l'identifiant
+      // Syntaxe :
+      //[ <Résultat> = ] getIPIdentifiant ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 2 octets : // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPIdentifiant()
+      
+      RENVOYER :_IPIdentifiant
+     type : 458752
+   -
+     name : getIPVersion
+     procedure_id : 1776766101354410554
+     type_code : 12
+     code : |1-
+      // Résumé : <indiquez ici ce que fait la procédure>
+      // Syntaxe :
+      //[ <Résultat> = ] getIPVersion ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 1 octet : // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPVersion()
+      
+      RENVOYER :_IPVers
+     type : 458752
+   -
+     name : getIPPriorite
+     procedure_id : 1776766144304158815
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne la priorité
+      // Syntaxe :
+      //[ <Résultat> = ] getIPPriorite ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 1 octet : // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPPriorite()
+      
+      RENVOYER :_IPPriorité
+     type : 458752
+   -
+     name : getIPDelai
+     procedure_id : 1776766578095628766
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne le délai
+      // Syntaxe :
+      //[ <Résultat> = ] getIPDelai ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 1 octet : // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPDelai()
+      
+      RENVOYER :_IPDélai
+     type : 458752
+   -
+     name : getIPDebit
+     procedure_id : 1776766599570536594
+     type_code : 12
+     code : |1+
+      // Résumé : Retourne le débit
+      // Syntaxe :
+      //[ <Résultat> = ] getIPDebit ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 1 octet :  // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPDebit()
+      
+      RENVOYER :_IPDébit
+     type : 458752
+   -
+     name : getIPFiabilite
+     procedure_id : 1776766646815252917
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne la fiabilité
+      // Syntaxe :
+      //[ <Résultat> = ] getIPFiabilite ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 1 octet : // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPFiabilite()
+      
+      RENVOYER :_IPFiabilité
+     type : 458752
+   -
+     name : getIPCout
+     internal_properties : CAAAAAgAAADHG8E9vD1O1bDtLy6jy0xsKm1l/5796QzNWHa3auMftJ4Lox8Dyi3WwIJ5n8UX6h1bWh4Mo5jndV4eV9FftCUkwPiCM50uB5Lv7MUtU3VqHaLbrFcKLOukQ6aeXfBMoMnzruyzfbN1QjeUZNDfiENSzzFA4jHrtnGr1mL72u50rfgAXT7EDE4Xhfwpke8QOb52Ncm8
+     procedure_id : 1776766689765001726
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne le cout
+      // Syntaxe :
+      //[ <Résultat> = ] getIPCout ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 1 octet : // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPCout()
+      
+      RENVOYER :_IPCout
+     type : 458752
+   -
+     name : getIPLongueur
+     procedure_id : 1776766810024441163
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne la longueur
+      // Syntaxe :
+      //[ <Résultat> = ] getIPLongueur ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 2 octets : // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPLongueur()
+      
+      RENVOYER :_IPLongueur
+     type : 458752
+   -
+     name : getIPFlag
+     internal_properties : CAAAAAgAAADHG8E9vB2OlbCt7+6jSwwsaq1l/949aQyNWHY3qiMfNB6L41+DSu0WQMI5X0WXql0bGh6M41hn9R6e11EfdKWkQPjCc50ux1JvrGVN85VKfQJ7DDdqDMtE40a+fZDsgCnTTswT3RPV4te0BHB/KCOyr1EgwhHLlhHLdoKb+o7UDVigvZ6k7C63pZxJsQ+wOb52Ncm8
+     procedure_id : 1776766857269092200
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne les flags
+      // Syntaxe :
+      //[ <Résultat> = ] getIPFlag ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 2 octets : // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPFlag()
+      
+      RENVOYER :_IPPositionFrag
+     type : 458752
+   -
+     name : getIPTTL
+     procedure_id : 1776766908808778053
+     type_code : 12
+     code : |1+
+      // Résumé : Retourne le TTL
+      // Syntaxe :
+      //[ <Résultat> = ] getIPTTL ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 1 octet :  // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPTTL()
+      
+      RENVOYER :_IPTTL
+     type : 458752
+   -
+     name : getIPDontFragment
+     internal_properties : CAAAAAgAAAAxidMvT1dQ7xzpZYKvz3QMei2l4Xgvt6JRVCj7Bn/HRM7DZyXpqLOY6MoHWxnXIq2L+mpi4f7xc14Wta0brB28XAwOKXNUEWCTaLI65orRtlskfXjVmUh7qrWTWutBt5K0t7EgDKx2RbrnFRH+YVprEMrlnxAkB4gSEXOc0eePSpWN6kP7xQdOXAtautY50NBoJzvK
+     procedure_id : 1776767900946323014
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne la valeur du flag Don't Fragment
+      // Syntaxe :
+      //[ <Résultat> = ] getIPDontFragment ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 1 octet :   // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPDontFragment()
+      
+      RENVOYER :_IPDontFragment
+     type : 458752
+   -
+     name : getIPMBZ
+     procedure_id : 1776768257428626046
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne le MBZ
+      // Syntaxe :
+      //[ <Résultat> = ] getIPMBZ ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 1 octet :    // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPMBZ()
+      
+      RENVOYER :_IPMBZ
+     type : 458752
+   -
+     name : getIPMoreFragment
+     internal_properties : CAAAAAgAAAAxidMvT1dQ7xzpZYKvz3QMei2l4Xgvt6JRVCj7Bn/HRM7DZyXpqLOY6MoHWxnXIq2L+mpi4f7xc14Wta0brB28XAwOKXNUEWCTaLI65orRtlskfXjVmUh7qrWTWutBt5K0t7EgDKx2RbrnFRH+YVprEMrlnxAkB4gSEXOc0eePSpWN6kP7xQdOXAtautY50NBoJzvK
+     procedure_id : 1776768394867677038
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne la valeur du flag MoreFragment
+      // Syntaxe :
+      //[ <Résultat> = ] getIPMoreFragment ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 1 octet :  // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPMoreFragment()
+      
+      RENVOYER :_IPMoreFragment
+     type : 458752
+   -
+     name : getIPPositionFrag
+     procedure_id : 1776768528011693839
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne la valeur de la fragmentation
+      // Syntaxe :
+      //[ <Résultat> = ] getIPPositionFrag ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 2 octets :    // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPPositionFrag()
+      
+      RENVOYER :_IPPositionFrag
+     type : 458752
+   -
+     name : getIPReserve
+     internal_properties : CAAAAAgAAADHG8E9vD1O1bDtLy6jy0xsKm1l/5796QzNWHa3auMftJ4Lox8Dyi3WwIJ5n8UX6h1bWh4Mo5jndV4eV9FftCUkwPiCM50uB5Lv7MUtU3VqHaLbrFcKLOukQ6aeXfBMoMnzruyzfbN1QjeUZNDfiENSzzFA4jHrtnGr1mL72u50rfgAXT7EDE4Xhfwpke8QOb52Ncm8
+     procedure_id : 1776768549486601402
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne le flag Reserve
+      // Syntaxe :
+      //[ <Résultat> = ] getIPReserve ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 1 octet :  // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getIPReserve()
+      
+      RENVOYER :_IPReserve
+     type : 458752
+   -
+     name : getPacket
+     internal_properties : CAAAAAgAAADHG8E9vD1O1bDtLy6jy0xsKm1l/5796QzNWHa3auMftJ4Lox8Dyi3WwIJ5n8UX6h1bWh4Mo5jndV4eV9FftCUkwPiCM50uB5Lv7MUtU3VqHaLbrFcKLOukQ6aeXfBMoMnzruyzfbN1QjeUZNDfiENSzzFA4jHrtnGr1mL72u50rfgAXT7EDE4Xhfwpke8QOb52Ncm8
+     procedure_id : 1777063068282352729
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne le packet
+      // Syntaxe :
+      //[ <Résultat> = ] getPacket ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	tableau :     // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getPacket()
+      
+      RENVOYER :_nPacket
+     type : 458752
+   -
+     name : getTimeStamp
+     internal_properties : CAAAAAgAAADHG8E9vD1O1bDtLy6jy0xsKm1l/5796QzNWHa3auMftJ4Lox8Dyi3WwIJ5n8UX6h1bWh4Mo5jndV4eV9FftCUkwPiCM50uB5Lv7MUtU3VqHaLbrFcKLOukQ6aeXfBMoMnzruyzfbN1QjeUZNDfiENSzzFA4jHrtnGr1mL72u50rfgAXT7EDE4Xhfwpke8QOb52Ncm8
+     procedure_id : 1779704361503544742
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne le timestamp
+      // Syntaxe :
+      //[ <Résultat> = ] getTimeStamp ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	réel :   // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getTimeStamp()
+      
+      RENVOYER :_rDurée
+     type : 458752
+   -
+     name : alimenterPort
+     internal_properties : CAAAAAgAAAACJNLoqj5JmNYPZOQUxO6TpEgVfO/VoSShRF6762UAVPDhXQZ2tbPfF+n7jLHOnNZlDPx5f5ixQ4Jsm/ZZPHymy4mFJZDJzH2Vimhs/u1N4zXn3v599HC85zj9GlHY1fMgIlrAJP3oZAFo3R0AGt46krX6jXKDGwEf+GUieaaTE+u6uWG9cN13qfrWxlCxzNQ3e7qTow==
+     procedure_id : 1779718874221471239
+     type_code : 12
+     code : |1-
+      // Résumé : Liste des ports gérés
+      // Syntaxe :
+      //alimenterPort ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure PROTEGE alimenterPort()
+      
+      ::_ListePort[20] = "FTP"
+      ::_ListePort[21] = "FTP"
+      ::_ListePort[22] = "SSH"
+      ::_ListePort[23] = "Telnet"
+      ::_ListePort[25] = "SMTP"
+      ::_ListePort[53] = "DNS"
+      ::_ListePort[80] = "HTTP"
+      ::_ListePort[109] = "POP2"
+      ::_ListePort[110] = "POP3"
+      ::_ListePort[137] = "NBNS"
+      ::_ListePort[138] = "BROWSER"
+      ::_ListePort[139] = "NBSS"
+      ::_ListePort[161] = "SNMP"
+     type : 458752
+   -
+     name : getAppProtocole
+     internal_properties : CAAAAAgAAABTr03kXzE+ycyBizLzf8xklkmVu0KpQfAJNPJbkn+flLrHc9vnnoVCpF6loxXDYp1nVv44z6wXUTKK2zWPQKW0XJTilwlCp/5TaAPLHUMobxwdop30ijkyjbws60ISdjNVYNIR35FToOG6GnZBdklUeQuueIsh7C8FTMhZdEwCL+JaizQW4gyNf7LXD2mWr1+KwV0o
+     procedure_id : 1779721773324481293
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne le protocole applicatif du packet
+      // Syntaxe :
+      //[ <Résultat> = ] getAppProtocole ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	chaîne : // 	Aucune
+      //// Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      Procédure getAppProtocole()
+      
+      RENVOYER :_AppProtocole
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : CClasse1
+resources :
+ string_res :
+  identifier : 0x18a21a72000b1672
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+  strings :
+   -
+     text :
+      fr-FR : processPacket - IP Protocole inconnu
+     index : 0
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

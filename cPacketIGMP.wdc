@@ -1,0 +1,242 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : cPacketIGMP
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x1101030f00d818f6
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     internal_properties : CAAAAAgAAAAO770K+vl1C8ZZucWTSduDAhRwL/CUOZRMHljJj2HTELhIl6UkPvc5XA2fELlzl7byxMJqA5A9jrCoIz/K+fQdQblu9iLgnpcL4LgN5EkjKZ3upI5DtgaER7R7AXTDRVi1RSMVmtLGUuB/oNFG+Tot0BJjZ15D70ipOC8cfRo=
+     code : |1+
+      // 
+      // Classe représentant un packet IGMP circulant sur un réseau Ethernet en IPV4
+      //
+      cPacketIGMP est une Classe
+      	hérite de cPacket
+      	
+      	// Membres relatifs à un packet IGMP
+      	PRIVÉ
+      		_IGMPType         est un entier sans signe sur 1 octet
+      		_IGMPTempsReponse est un entier sans signe sur 1 octet
+      		_IGMPChecksum     est un entier sans signe sur 2 octets
+      		_IGMPAddrGroupe   est une chaine
+      		_IGMPDescription  est une chaine
+      FIN
+     type : 131072
+  procedures :
+   -
+     name : Constructeur
+     procedure_id : 1225263936595106038
+     type_code : 27
+     code : |1+
+      PROCEDURE Constructeur(rDurée est un réel)
+      
+      Constructeur cPacket(rDurée)
+     type : 589824
+   -
+     name : Destructeur
+     procedure_id : 1225263936595171574
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructeur()
+      
+     type : 655360
+   -
+     name : processPacket
+     internal_properties : CAAAAAgAAADbodmSJ7kUnOVzv1cR5Dl4AZB0BM8kbEQXSmEJyPHqiNJCWHbFpVCA9pxGQ12RoYEi9wpVlaST56SUwRVx59VqNczmSE4wZXzgq4h0UyTB3euKI8hmvWtJ+JpgsUVUZeGCM345rDFIw+5S+GTcFIhQ3Njq9CQLP7ScYB4D6RKLjuzwUMseuUuWG6Hk2T1sp/XhxEggwTEjVarI0moA5yAB2kgCo6oulN/LwIhVChb6WYekSA==
+     procedure_id : 1225264507829886625
+     type_code : 12
+     code : |1+
+      // Résumé : Traite le contenu du packet IGMP
+      // Syntaxe :
+      //processPacket (<nBuffer>, <nOctetLut> est entier)
+      //
+      // Paramètres :
+      //	nBuffer : Données du packet
+      //	nOctetLut (entier) : Nombre d'octets lus
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE VIRTUELLE processPacket(nBuffer, nOctetLut est un entier)
+      
+      // Appel de la méthode de la classe mère pour renseigner l'entête IP
+      Ancêtre:processPacket(nBuffer,nOctetLut)
+      
+      // Variable
+      nTailleIPHeader est un entier
+      nAdresseGroupe  est un entier
+      
+      // Initialisation pour savoir ou commence le packet IGMP
+      nTailleIPHeader = :_IPIHL * 4 // IHL * 32 bits
+      
+      // Remplissage de l'entête, sachant que les premiers octets du paquet sont l'entête IP
+      :_IGMPType         = :_nPacket[nTailleIPHeader+1]
+      :_IGMPTempsReponse = :_nPacket[nTailleIPHeader+2]
+      :_IGMPChecksum     = (:_nPacket[nTailleIPHeader+3] * 256) + :_nPacket[nTailleIPHeader+4]
+      nAdresseGroupe     = (:_nPacket[nTailleIPHeader+5] * Puissance(2,24)) + (:_nPacket[nTailleIPHeader+6] * Puissance(2,16)) +  (:_nPacket[nTailleIPHeader+7] * Puissance(2,8)) + :_nPacket[nTailleIPHeader+8]
+      :_IGMPDescription  = :processIGMPDescription(:_IGMPType)
+      
+      // Affectation des IP
+      // On transforme les IPV4 qui sont des entiers sur 4 octets en chaine de type "192.168.0.2" par exemple
+      // Cela grâce à la fonction 'inet_ntoa' de l'API WinSock.
+      nAdresseChaîne est un entier = API(cCapture::DLL_NOM,"inet_ntoa",nAdresseGroupe)
+      :_IGMPAddrGroupe = ChaîneRécupère(nAdresseChaîne, crAdresseASCIIZ)
+      
+      // Remplissage des données
+      Dimension(:_nData,:_nOctetReçus - nTailleIPHeader - 8) // On enlève la taille de l'entête IP et IGMP (8 octets)
+      POUR I = 1 _A_ Dimension(:_nData)
+      	:_nData[I] = :_nPacket[nTailleIPHeader + 8 + I]
+      FIN
+     type : 458752
+   -
+     name : getIGMPType
+     procedure_id : 1225270507908001974
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne le type de message IGMP
+      // Syntaxe :
+      //[ <Résultat> = ] getIGMPType ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 1 octet : // 	Aucune
+      //
+      PROCEDURE getIGMPType()
+      
+      RENVOYER :_IGMPType
+     type : 458752
+   -
+     name : getIGMPTempsReponse
+     procedure_id : 1225270546562782207
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne le temps de réponse maximum
+      // Syntaxe :
+      //[ <Résultat> = ] getIGMPTempsReponse ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 1 octet : // 	Aucune
+      //
+      PROCEDURE getIGMPTempsReponse()
+      
+      RENVOYER :_IGMPTempsReponse
+     type : 458752
+   -
+     name : getIGMPChecksum
+     internal_properties : CAAAAAgAAADHG8E9vD1O1bDtLy6jy0xsKm1l/5796QzNWHa3auMftJ4Lox8Dyi3WwIJ5n8UX6h1bWh4Mo5jndV4eV9FftCUkwPiCM50uB5Lv7MUtU3VqHaLbrFcKLOukQ6aeXfBMoMnzruyzfbN1QjeUZNDfiENSzzFA4jHrtnGr1mL72u50rfgAXT7EDE4Xhfwpke8QOb52Ncm8
+     procedure_id : 1225270568037689340
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne le checksum
+      // Syntaxe :
+      //[ <Résultat> = ] getIGMPChecksum ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 2 octets : // 	Aucune
+      //
+      PROCEDURE getIGMPChecksum()
+      
+      RENVOYER :_IGMPChecksum
+     type : 458752
+   -
+     name : getIGMPAdresseGroupe
+     procedure_id : 1225270619578095554
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne l'adresse du groupe
+      // Syntaxe :
+      //[ <Résultat> = ] getIGMPAdresseGroupe ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	entier sans signe sur 4 octets : // 	Aucune
+      //
+      PROCEDURE getIGMPAdresseGroupe()
+      
+      RENVOYER :_IGMPAddrGroupe
+     type : 458752
+   -
+     name : getIGMPDescription
+     internal_properties : CAAAAAgAAACrd6WhyqEuuYyhi8Jjz7zUZiml+wKJ4RCZRGK7Ej//lLo3c8t37jXy5N4Fc+XzUu3X1o6YT4z3cWIai9XvYGUU/KTCZ7kyN45zCItjtRsgdwRVGuV8MvFqhZT0A3rKLlv9uOq5J/mreLnSIg7ZzoEcIcPmQNMJ5CcdRNBRTGTad6qS41ye6iRl90p/R+HOZ0rimaVQ
+     procedure_id : 1225270645347970358
+     type_code : 12
+     code : |1-
+      // Résumé : Retourne la description du packet IGMP
+      // Syntaxe :
+      //[ <Résultat> = ] getIGMPDescription ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	chaîne ANSI : // 	Aucune
+      //
+      PROCEDURE getIGMPDescription()
+      
+      RENVOYER :_IGMPDescription
+     type : 458752
+   -
+     name : processIGMPDescription
+     procedure_id : 1225271607420671665
+     type_code : 12
+     code : |1+
+      // Résumé : Retourne la description du paquet
+      // Syntaxe :
+      //[ <Résultat> = ] processIGMPDescription (<nType> est entier sans signe sur 1 octet)
+      //
+      // Paramètres :
+      //	nType (entier sans signe sur 1 octet) : Type IGMP
+      // Valeur de retour :
+      // 	chaîne ANSI : // 	Aucune
+      //
+      PROCEDURE PRIVE processIGMPDescription(nType est un entier sans signe sur 1 octet)
+      
+      SELON nType
+      	CAS 11:
+      		RENVOYER <§$0000§>
+      	CAS 12,16:
+      		RENVOYER <§$0001§>
+      	CAS 17:	
+      		RENVOYER <§$0002§>
+      	AUTRE CAS:
+      		RENVOYER ""		
+      FIN
+      
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : Classe1
+resources :
+ string_res :
+  identifier : 0x1101030f00d518f6
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+  strings :
+   -
+     text :
+      fr-FR : Requête pour identifier les groupes ayant des membres actifs
+     index : 0
+   -
+     text :
+      fr-FR : Rapport d'appartenance au groupe émis par un membre actif du groupe
+     index : 1
+   -
+     text :
+      fr-FR : Un membre annonce son départ du groupe
+     index : 2
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ
